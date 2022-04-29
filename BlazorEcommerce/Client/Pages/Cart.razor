@@ -1,0 +1,190 @@
+﻿@page "/cart"
+@inject ICartService CartService
+@inject IOrderService OrderService
+@inject IAuthService AuthService
+@inject IToastService ToastService
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+@*@implements IDisposable*@
+@layout ShopLayout
+
+<Microsoft.AspNetCore.Components.Web.PageTitle>Shopping Cart</Microsoft.AspNetCore.Components.Web.PageTitle> 
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a onclick="@(()=> NavigationManager.NavigateTo("",true))">Home</a></li>
+                    <li class="breadcrumb-item active">Cart</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="cart-page-main-block inner-page-sec-padding-bottom">
+    <div class="cart_area cart-area-padding  ">
+        <div class="container">
+            <div class="page-section-title">
+                <h1>Shopping Cart</h1>
+            </div>
+
+            @if (cartProducts == null || cartProducts.Count == 0)
+            {
+                <span>@message</span>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <form action="#" class="">
+                            <!-- Cart Table -->
+                        <div class="cart-table table-responsive mb--40">
+                                <table class="table">
+                                    <!-- Head Row -->
+                                <thead>
+                                        <tr>
+                                            <th class="pro-remove"></th>
+                                            <th class="pro-thumbnail">Image</th>
+                                            <th class="pro-title">Product</th>
+                                            <th class="pro-price">Price</th>
+                                            <th class="pro-quantity">Quantity</th>
+                                            <th class="pro-subtotal">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in cartProducts)
+                                        {
+                                            <!-- Product Row -->
+                                            <tr>
+                                                <td class="pro-remove">
+                                                    <a @onclick="@(() =>RemoveProductFromCart(product.ProductId, product.ProductTypeId))">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="pro-thumbnail">
+                                                    <a href="/product/@product.ProductId">
+                                                        <img src="@product.ImageUrl" alt="Product">
+                                                    </a>
+                                                </td>
+                                                <td class="pro-title"><a href="/product/@product.ProductId">@product.Title</a></td>
+                                                <td class="pro-price"><span>$@product.Price</span></td>
+                                                <td class="pro-quantity">
+                                                    <div class="pro-qty">
+                                                        <div class="count-input-block">
+                                                            <input type="number" class="form-control text-center"
+                                                           value="@product.Quantity" @onchange="@((ChangeEventArgs e) => UpdateQuantity(e, product))">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="pro-subtotal"><span>$@(product.Price * product.Quantity)</span></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="cart-section-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12 mb--30 mb-lg--0">
+                    <!-- slide Block 5 / Normal Slider -->
+                    <div class="cart-block-title">
+                        <h2>YOU MAY BE INTERESTED IN…</h2>
+                    </div>
+                    <div class="product-slider sb-slick-slider">
+                        @if (ProductService.Products == null || ProductService.Products.Count == 0)
+                        {
+                            <span>@ProductService.Message</span>
+                        }
+                        else
+                        {
+                            <BlazorSlickCarousel @ref="theCarousel" Configurations="configurations">
+                                <BlazorSlickCarouselContent>
+                                    @foreach (var product in ProductService.Products)
+                                    {
+                                        @if (product.Featured)
+                                        {
+                                            <div class="single-slide">
+                                                <div class="product-card">
+                                                    <div class="product-header">
+                                                        <a href="#" class="author">
+                                                            Lpple
+                                                        </a>
+                                                        <h3><a href="product/@product.Id">@product.Title</a></h3>
+                                                    </div>
+                                                    <div class="product-card--body">
+                                                        <div class="card-image">
+                                                            <img src="@product.ImageUrl" alt="">
+                                                            <div class="hover-contents">
+                                                                <a href="product/@product.Id" class="hover-image">
+                                                                    <img src="@product.ImageUrl" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="price-block">
+                                                            @if (product.Variants.Count == 0)
+                                                            {
+                                                                <span class="price">Empty</span>
+                                                            }
+                                                            else if (product.Variants.Count >= 1)
+                                                            {
+                                                                @if (product.Variants[0].OriginalPrice > product.Variants[0].Price)
+                                                                {
+                                                                    <span class="price">$ @product.Variants[0].Price</span>
+                                                                    <del class="price-old">$ @product.Variants[0].OriginalPrice</del>
+                                                                    <span class="price-discount">Sale</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="price">$ @product.Variants[0].Price</span>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </BlazorSlickCarouselContent>
+                                <BlazorSlickCarouselLoading>
+                                    Loading...
+                                </BlazorSlickCarouselLoading>
+                            </BlazorSlickCarousel>
+                        }
+                    </div>
+                </div>
+                <!-- Cart Summary -->
+                <div class="col-lg-6 col-12 d-flex">
+                    <div class="cart-summary">
+                        <div class="cart-summary-wrap">
+                            <h4><span>Cart Summary</span></h4>
+                            @if (cartProducts == null || cartProducts.Count == 0)
+                            {
+                                <p>Sub Total<span class="text-primary">$00.00</span></p>
+                                <p>Shipping Cost <span class="text-primary">$00.00</span></p>
+                                <h2>Grand Total <span class="text-primary">$00.00</span></h2>
+                            }
+                            else
+                            {
+                                <p>Sub Total (@cartProducts.Count) <span class="text-primary">$@cartProducts.Sum(product => product.Price * product.Quantity)</span></p>
+                                <p>Shipping Cost <span class="text-primary">$00.00</span></p>
+                                <h2>Grand Total <span class="text-primary">$@cartProducts.Sum(product => product.Price * product.Quantity)</span></h2>
+                            }
+                        </div>
+                        <div class="cart-summary-button">
+                            <a @onclick="Checkout" class="checkout-btn c-btn btn--primary">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

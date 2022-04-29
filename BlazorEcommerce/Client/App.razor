@@ -1,0 +1,37 @@
+﻿
+<LoadingScreen>
+    <CascadingAuthenticationState>
+        <Router AppAssembly="@typeof(App).Assembly">
+            <Found Context="routeData">
+                <CascadingValue Value="this">
+                    <AuthorizeRouteView RouteData="@routeData" DefaultLayout="this.LayoutType">
+                    <NotAuthorized>
+                        <h3>Whoops! You're not allowed to see this page.</h3>
+                        <h5>Please <a href="login">login</a> or <a href="register">register</a> for a new account.</h5>
+                    </NotAuthorized>
+                </AuthorizeRouteView>
+                </CascadingValue>
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            </Found>
+            <NotFound>
+                <Microsoft.AspNetCore.Components.Web.PageTitle>Not found</Microsoft.AspNetCore.Components.Web.PageTitle>
+                <LayoutView Layout="@typeof(ShopLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+    </CascadingAuthenticationState>
+</LoadingScreen>
+@code {
+
+    private Type LayoutType = typeof(MainLayout);
+
+    public void SetLayout(Type layout)
+    {
+        if (layout != LayoutType)
+        {
+            this.LayoutType = layout;
+            StateHasChanged();
+        }
+    }
+}

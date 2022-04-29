@@ -1,0 +1,12 @@
+﻿@inject NavigationManager NavigationManager
+
+<a class="site-brand" @onclick="GoToHome">
+    <img src="Shop/image/logo.png" alt="">
+</a>
+
+@code {
+    private void GoToHome()
+    {
+        NavigationManager.NavigateTo("", true);
+    }
+}

@@ -1,0 +1,38 @@
+﻿
+.image-wrapper {
+    width: 150px;
+    text-align: center;
+}
+
+.image {
+    max-height: 150px;
+    max-width: 150px;
+    padding: 6px;
+}
+
+.name {
+    flex-grow: 1;
+    padding: 6px;
+}
+
+.product-price {
+    font-weight: 600;
+    text-align: right;
+}
+.checkout-quick-box{
+    margin: 0;
+    display: flex;
+}
+.total-price {
+    margin: 1em 0px 5em;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: right;
+    background: #f7f6f7;
+    padding: 6px 25px;
+    border-top: 3px solid rgb(98, 171, 0);
+}
+.order-date {
+    font-weight: normal;
+    font-size: 18px;
+}

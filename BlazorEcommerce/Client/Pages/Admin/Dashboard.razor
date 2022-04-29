@@ -1,0 +1,133 @@
+﻿@page "/admin"
+@using System.Globalization
+@layout MainLayout
+@inject IFileService fileService
+@inject IToastService toastService
+@inject IOrderService OrderService
+@inject IProductService ProductService
+@inject ICategoryService CategoryService
+@inject IAuthService AuthService
+
+
+<h4 class="checkout-title">Dashboard</h4>
+
+@if (Orders != null && ProductService.AdminProducts != null && categoryResponses != null && users != null)
+{
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title">Number of Trades</span>
+                        <div class="d-flex justify-content-between align-items-center text-secondary">
+                            <h4 class="fw-bold">@Orders.Count</h4>
+                            <i class="fas fa-file-invoice-dollar fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title">Total Revenue</span>
+                        <div class="d-flex justify-content-between align-items-center text-secondary">
+                            <h4 class="fw-bold">$@Orders.Sum(o => o.TotalPrice)</h4>
+                            <i class="far fa-bookmark fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title">Total Products</span>
+                        <div class="d-flex justify-content-between align-items-center  text-secondary">
+                            <h4 class="fw-bold">@ProductService.AdminProducts.Count</h4>
+                            <i class="fas fa-clipboard fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title">Total Account</span>
+                        <div class="d-flex justify-content-between align-items-center  text-secondary">
+                            <h4 class="fw-bold">@users.Count</h4>
+                            <i class="fas fa-user-alt fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-6">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title fw-bold">Product of Category</span>
+                        <RadzenChart>
+                            <RadzenPieSeries Data="categoryResponses" Title="Total Product" CategoryProperty="Name" ValueProperty="TotalProduct">
+                            </RadzenPieSeries>
+                        </RadzenChart>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title fw-bold">Revenue Analysis</span>
+                        <RadzenChart>
+                            <RadzenLineSeries Data="Turnover" Title="Total Turnover" CategoryProperty="OrderDate" ValueProperty="Turnover">
+                                <RadzenMarkers MarkerType="MarkerType.Circle" />
+                            </RadzenLineSeries>
+                            <RadzenValueAxis Formatter="@FormatAsUSD">
+                                <RadzenGridLines Visible="true" />
+                            </RadzenValueAxis>
+                        </RadzenChart>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="card rounded-2 border">
+                    <div class="card-body">
+                        <span class="card-title fw-bold">Orders Summary</span>
+                        <RadzenGrid AllowPaging="true" AllowSorting="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Data="Orders" TItem="OrderOverviewResponse">
+                            <Columns>
+                                <RadzenGridColumn TItem="OrderOverviewResponse" Property="Id" Title="Order ID"></RadzenGridColumn>
+                                <RadzenGridColumn TItem="OrderOverviewResponse" Property="UserName" Title="Custommer"></RadzenGridColumn>
+                                <RadzenGridColumn TItem="OrderOverviewResponse" Property="OrderDate" Title="Created Date"></RadzenGridColumn>
+                                <RadzenGridColumn TItem="OrderOverviewResponse" Property="QuantityItems" Title="Quantity Product"></RadzenGridColumn>
+                                <RadzenGridColumn TItem="OrderOverviewResponse" Property="TotalPrice" Title="Total price">
+                                    <Template Context="order">
+                                        <span>$@order.TotalPrice</span>
+                                    </Template>
+                                </RadzenGridColumn>
+                            </Columns>
+                        </RadzenGrid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<OrderOverviewResponse> Orders = new List<OrderOverviewResponse>();
+    private List<OrderOverviewResponse> Turnover = new List<OrderOverviewResponse>();
+    private List<CategoryResponse> categoryResponses = new List<CategoryResponse>();
+    private List<UserResponse> users = new List<UserResponse>();
+    protected override async Task OnInitializedAsync()
+    {
+        Orders = await OrderService.GetAdminOrder();
+        await ProductService.GetAdminProducts();
+        categoryResponses = await CategoryService.GetProductOfCategory();
+        Turnover = await OrderService.GetTurnover();
+        users = await AuthService.GetUsers();
+    }
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+}

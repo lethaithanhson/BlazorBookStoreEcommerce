@@ -1,0 +1,131 @@
+﻿@page "/admin/products"
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+@*@attribute [Authorize(Roles = "Admin")]*@
+
+<h4 class="checkout-title">Products</h4>
+
+@if (ProductService.AdminProducts == null)
+{
+    <span>Loading Products...</span>
+}
+else
+{
+    <div class="container">
+        <div class="w-100 d-flex justify-content-end mb-5">
+            <button class="btn btn-primary" @onclick="CreateProduct">
+                <i class="fas fa-plus pe-2"></i> New product
+            </button>
+        </div>
+        @*<table class="table">
+            <thead>
+            <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Variant</th>
+            <th>Price</th>
+            <th>Visible</th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <Virtualize Items="ProductService.AdminProducts" Context="product">
+            <tr>
+            <td><img src="@product.ImageUrl" /></td>
+            <td>@product.Title</td>
+            <td>
+            @foreach (var variant in product.Variants)
+            {
+            <span>@variant.ProductType.Name</span>
+
+            <br />
+            }
+            </td>
+            <td>
+            @foreach (var variant in product.Variants)
+            {
+            <span>@variant.Price</span>
+
+            <br />
+            }
+            </td>
+            <td>@(product.Visible ? "✔️" : "")</td>
+            <td>
+            <button class="btn btn-primary" @onclick="(() => EditProduct(product.Id))">
+            <i class="oi oi-pencil"></i>
+            </button>
+            </td>
+            </tr>
+            </Virtualize>
+            </tbody>
+            </table>*@
+        <RadzenGrid @ref="ProductGrid" AllowFiltering="false" AllowPaging="true" PageSize="6" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                Data="ProductService.AdminProducts" TItem="Product" AllowSorting="true">
+            <Columns>
+                <RadzenGridColumn TItem="Product" Property="ImageUrl" Title="Image" Filterable="false" Sortable="false" CssClass="d-flex justify-content-center">
+                    <Template Context="data">
+                        <img class="product-img" src="@data.ImageUrl" />
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Product" Property="Title" Title="Product"></RadzenGridColumn>
+                <RadzenGridColumn TItem="Product" Property="Variants" Title="Variants" Filterable="false" Sortable="false">
+                    <Template Context="product">
+                        @foreach (var item in product.Variants)
+                        {
+                            <span>@item.ProductType.Name</span>
+
+                            <br />
+                        }
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Product" Property="Price" Title="Price" Sortable="false" Filterable="false">
+                    <Template Context="product">
+                        @foreach (var item in product.Variants)
+                        {
+                            <span>$@item.Price</span>
+
+                            <br />
+                        }
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Product" Property="Visible" Title="Visible" Filterable="false" Sortable="false" CssClass="text-center">
+                    <Template Context="product">
+                        @if (product.Visible)
+                        {
+                            <i class="fas fa-check text-success fs-5"></i>
+                        }
+                        else
+                        {
+                            <i class="fas fa-times text-danger fs-5"></i>
+                        }
+                    </Template>
+                </RadzenGridColumn>
+                <RadzenGridColumn TItem="Product" Filterable="false" Sortable="false">
+                    <Template Context="product">
+                        <button class="btn btn--primary" @onclick="(() => EditProduct(product.Id))">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
+                    </Template>
+                </RadzenGridColumn>
+            </Columns>
+        </RadzenGrid>
+    </div>
+}
+
+@code {
+    RadzenGrid<Product> ProductGrid;
+    protected override async Task OnInitializedAsync()
+    {
+        await ProductService.GetAdminProducts();
+    }
+
+    void EditProduct(int productId)
+    {
+        NavigationManager.NavigateTo($"admin/product/{productId}");
+    }
+
+    void CreateProduct()
+    {
+        NavigationManager.NavigateTo("admin/product");
+    }
+}

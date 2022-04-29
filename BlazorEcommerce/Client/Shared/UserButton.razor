@@ -1,0 +1,17 @@
+﻿@inject ILocalStorageService LocalStorage
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject ICartService CartService
+
+<span @onclick="Logout">Logout</span>
+
+@code {
+    
+    private async Task Logout()
+    {
+        await LocalStorage.RemoveItemAsync("authToken");
+        await CartService.GetCartItemsCount();
+        await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("", true);
+    }
+}

@@ -1,0 +1,159 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = browser
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = true
+build_property.IncludeAllContentForSelfExtract = 
+build_property.RootNamespace = BlazorEcommerce.Client
+build_property.RootNamespace = BlazorEcommerce.Client
+build_property.ProjectDir = D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Admin/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Blog.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Checkout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hlY2tvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Faq.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmFxLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/OrderSuccess.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JkZXJTdWNjZXNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Profile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/AddressForm.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEFkZHJlc3NGb3JtLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/Footer.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZvb3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/LoadingScreen.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvYWRpbmdTY3JlZW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/Pagination.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFBhZ2luYXRpb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/Search.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFNlYXJjaC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Admin/Categories.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ2F0ZWdvcmllcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-puhdt2637c
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Admin/EditProduct.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cRWRpdFByb2R1Y3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-4mok10gb40
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Admin/Products.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUHJvZHVjdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-31vej7wq1l
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Admin/ProductTypes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUHJvZHVjdFR5cGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-csx47llx4i
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Cart.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FydC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-3b5rf2ockk
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/OrderDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JkZXJEZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-q6wt7vs0lr
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Orders.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3JkZXJzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-jl4wtx5dv4
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/ProductDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZHVjdERldGFpbHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-0l6p78lwiq
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Pages/Shop.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hvcC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-3yzj0qg6yb
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/AdminMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEFkbWluTWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-1zvt91rzix
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/Admin/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEFkbWluXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-qdpfj251fg
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/CartCounter.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhcnRDb3VudGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-dqlwyr1b25
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/FeaturedProducts.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEZlYXR1cmVkUHJvZHVjdHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-mkldjm4yjh
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/HomeButton.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEhvbWVCdXR0b24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-bhpobyacx5
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-7v9fucczvh
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/ProductList.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFByb2R1Y3RMaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-fx5atut3jr
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/ShopLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFNob3BMYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-eyye3xe6ci
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/ShopNavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFNob3BOYXZNZW51LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-d3ua3ebcma
+
+[D:/WebBlazor/Patricgod/BlazorEcommerce/BlazorEcommerce/Client/Shared/UserButton.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFVzZXJCdXR0b24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-l31arl77u2

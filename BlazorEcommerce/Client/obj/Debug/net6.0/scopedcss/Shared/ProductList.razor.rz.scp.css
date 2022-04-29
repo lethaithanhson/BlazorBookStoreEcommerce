@@ -1,0 +1,25 @@
+/*.product-card .product-grid-content img {
+    height: 330px;
+    object-fit: contain;
+}
+.shop-product-wrap{
+    margin: 50px 0;
+}
+*/
+
+.product-card .product-grid-content img[b-fx5atut3jr] {
+    height: 330px;
+    object-fit: contain;
+}
+
+.product-card .product-grid-content .hover-contents img[b-fx5atut3jr] {
+    filter: blur(2px);
+}
+
+.product-card h3 a[b-fx5atut3jr] {
+    height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

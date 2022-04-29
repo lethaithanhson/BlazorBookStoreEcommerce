@@ -1,0 +1,156 @@
+﻿@page "/shop"
+@inject IJSRuntime JSRuntime
+@inject IProductService ProductService
+@inject ICartService CartService
+@inject NavigationManager navigationManager
+@layout ShopLayout
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a onclick="@(()=> navigationManager.NavigateTo("",true))">Home</a></li>
+                    <li class="breadcrumb-item active">Shop</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+<main class="inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="shop-toolbar mb--30">
+            <div class="row align-items-center">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <!-- Product View Mode -->
+                    <div class="product-view-mode">
+                        <a href="#" class="sorting-btn active" data-target="grid"><i class="fas fa-th"></i></a>
+                        <a href="#" class="sorting-btn" data-target="grid-four">
+                            <span class="grid-four-icon">
+                                <i class="fas fa-grip-vertical"></i><i class="fas fa-grip-vertical"></i>
+                            </span>
+                        </a>
+                        <a href="#" class="sorting-btn" data-target="list "><i class="fas fa-list"></i></a>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-md-4 col-sm-6  mt--10 mt-sm--0">
+                    <span class="toolbar-status">
+                        Showing 1 to 9 of 14 (2 Pages)
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        @if (listProducts == null)
+        {
+            <span>Loading...</span>
+        }
+        else
+        {
+            <div class="shop-product-wrap grid with-pagination row space-db--30 shop-border">
+                @foreach (var product in listProducts)
+                {
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="product-card">
+                            <div class="product-grid-content">
+                                <div class="product-header">
+                                    <a class="author">
+                                        Lpple
+                                    </a>
+                                    <h3><a href="/product/@product.Id">@product.Title</a></h3>
+                                </div>
+                                <div class="product-card--body">
+                                    <div class="card-image">
+                                        <img src="@product.ImageUrl" alt="">
+                                        <div class="hover-contents">
+                                            <a href="/product/@product.Id" class="hover-image">
+                                                <img src="@product.ImageUrl" alt="">
+                                            </a>
+                                            <div class="hover-btns">
+                                                <a class="single-btn" @onclick="@(()=> AddToCart(product))">
+                                                    <i class="fas fa-shopping-basket"></i>
+                                                </a>
+                                                <a href="wishlist.html" class="single-btn">
+                                                    <i class="fas fa-heart"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="price-block">
+                                        @if (product.Variants.Count == 0)
+                                        {
+                                            <span class="price">Empty</span>
+                                        }
+                                        else if (product.Variants.Count >= 1)
+                                        {
+                                            @if (product.Variants[0].OriginalPrice > product.Variants[0].Price)
+                                            {
+                                                <span class="price">$ @product.Variants[0].Price</span>
+                                                <del class="price-old">$ @product.Variants[0].OriginalPrice</del>
+                                                <span class="price-discount">Sale</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="price">$ @product.Variants[0].Price</span>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-list-content">
+                                <div class="card-image">
+                                    <img src="@product.ImageUrl" alt="">
+                                </div>
+                                <div class="product-card--body">
+                                    <div class="product-header">
+                                        <a class="author">
+                                            Bpple
+                                        </a>
+                                        <h3>
+                                            <a href="/product/@product.Id" tabindex="0">
+                                                @product.Title
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <article>
+                                        <h2 class="sr-only">Card List Article</h2>
+                                        <p class="description">
+                                            @product.Description
+                                        </p>
+                                    </article>
+                                    <div class="price-block">
+                                        @if (product.Variants.Count == 0)
+                                        {
+                                            <span class="price">Empty</span>
+                                        }
+                                        else if (product.Variants.Count >= 1)
+                                        {
+                                            @if (product.Variants[0].OriginalPrice > product.Variants[0].Price)
+                                            {
+                                                <span class="price">$ @product.Variants[0].Price</span>
+                                                <del class="price-old">$ @product.Variants[0].OriginalPrice</del>
+                                                <span class="price-discount">20%</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="price">$ @product.Variants[0].Price</span>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="btn-block">
+                                        <a class="btn btn-outlined" @onclick="@(()=> AddToCart(product))">Add To Cart</a>
+                                        <a href="#" class="card-link"><i class="fas fa-heart"></i> Add To Wishlist</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- Pagination Block -->
+            <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+        }
+    </div>
+</main>
+

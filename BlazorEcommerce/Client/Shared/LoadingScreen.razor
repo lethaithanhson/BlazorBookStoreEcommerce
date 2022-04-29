@@ -1,0 +1,21 @@
+﻿@if (isLoaded)
+{
+    @ChildContent
+}
+else
+{
+    <div class="loader"></div>
+}
+
+@code {
+    bool isLoaded;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(3000); // TODO actual initialization job
+        isLoaded = true;
+    }
+}

@@ -1,0 +1,54 @@
+﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration;
+@using BlazorEcommerce.Client.Shared.Admin
+@using BlazorEcommerce.Client.Pages.Admin
+
+<BlazoredToasts Position="ToastPosition.TopRight"
+                Timeout="5"
+                IconType="IconType.FontAwesome"
+                ErrorIcon="fa fa-times"
+                InfoIcon="fa fa-info"
+                SuccessIcon="fa fa-check"
+                WarningIcon="far fa-exclamation-triangle" />
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        <div class="container top-row px-4">
+            @*<button class="btn btn-secondary" @onclick="() => ButtonClick(typeof(MainLayout))">Main Layout</button>
+                <button class="btn btn-dark ms-2" @onclick="() => ButtonClick(typeof(ShopLayout))">Shop Layout</button>*@
+            <AuthorizeView>
+                <ul class="header-top-list me-4">
+                    <li class="dropdown-trigger language-dropdown d-flex align-items-center">
+                        <a class="d-flex justify-content-center align-items-center">
+                            <span class="avatar">@(context.User.Identity.Name.Substring(0,1))</span>
+                            @context.User.Identity.Name
+                        </a><i class="fas fa-chevron-down dropdown-arrow"></i>
+                        <ul class="dropdown-box">
+                            <li> <a href="/profile">My Account</a></li>
+                            <li> <a href="#"><UserButton /></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </AuthorizeView>
+        </div>
+
+        <div class="content px-4 mb-5">
+            @Body
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter] public App MyApp { get; set; }
+
+
+    void ButtonClick(Type layoutType)
+    {
+        MyApp.SetLayout(layoutType);
+    }
+}

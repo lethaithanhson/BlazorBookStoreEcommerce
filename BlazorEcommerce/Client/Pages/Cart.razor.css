@@ -1,0 +1,12 @@
+﻿.slick-slide img{
+    width: 268px;
+    height: 268px;
+    object-fit: contain;
+}
+.product-slider .product-card h3 {
+    height: 45px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

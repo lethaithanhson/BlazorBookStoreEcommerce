@@ -1,0 +1,8 @@
+﻿.cart-dropdown-block .cart-product a img {
+    height: 82px;
+    object-fit: contain;
+}
+.message_more{
+    padding: 0 10px;
+    margin-top: -10px;
+}

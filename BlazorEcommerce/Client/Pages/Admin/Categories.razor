@@ -1,0 +1,223 @@
+﻿@page "/admin/categories"
+@inject ICategoryService CategoryService
+@inject IToastService ToastService
+@inject IJSRuntime JSRuntime
+@attribute [Authorize(Roles = "Admin")]
+@implements IDisposable
+
+
+<h4 class="checkout-title">Categories</h4>
+
+@*<div class="header">
+    <div class="col">Name</div>
+    <div class="col">Url</div>
+    <div class="col">Visible</div>
+    <div class="col"></div>
+    </div>
+
+    @foreach (var category in CategoryService.AdminCategories)
+    {
+    @if (category.Editing)
+    {
+    <EditForm Model="editingCategory" OnSubmit="UpdateCategory">
+    <div class="row">
+    <div class="col">
+    <InputText @bind-Value="editingCategory.Name" class="form-control"></InputText>
+    </div>
+    <div class="col">
+    <InputText @bind-Value="editingCategory.Url" class="form-control"></InputText>
+    </div>
+    <div class="col col-visible">
+    <InputCheckbox @bind-Value="editingCategory.Visible" style="transform: scale(1.5,1.5);"></InputCheckbox>
+    </div>
+    <div class="col">
+    <button type="submit" class="btn btn-primary">
+    <i class="oi oi-cloud-upload"></i>
+    </button>
+    <button class="btn btn-primary" @onclick="CancelEditing">
+    <i class="oi oi-circle-x"></i>
+    </button>
+    </div>
+    </div>
+    </EditForm>
+    }
+    else
+    {
+    <div class="row">
+    <div class="col">
+    @category.Name
+    </div>
+    <div class="col">
+    @category.Url
+    </div>
+    <div class="col col-visible">
+    <span>@(category.Visible ? "✔️" : "")</span>
+    </div>
+    <div class="col">
+    <button class="btn btn-primary" @onclick="(() => EditCategory(category))">
+    <i class="oi oi-pencil"></i>
+    </button>
+    <button class="btn btn-primary" @onclick="(() => DeleteCategory(category.Id))">
+    <i class="oi oi-trash"></i>
+    </button>
+    </div>
+    </div>
+    }
+    }
+    <button class="btn btn-primary" @onclick="CreateNewCategory">
+    <i class="oi oi-plus"></i> Add new category
+    </button>*@
+
+<div class="container">
+    <div class="w-100 d-flex justify-content-end mb-5">
+        <button class="btn btn-primary" @onclick="CreateNewCategory">
+            <i class="fas fa-plus pe-2"></i> New category
+        </button>
+    </div>
+    <div class="cart-table table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Url</th>
+                    <th>Visible</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in CategoryService.AdminCategories)
+                {
+                    @if (category.Editing)
+                    {
+                        @* <EditForm Model="editingCategory" OnSubmit="UpdateCategory">*@
+                        <tr>
+                            <td>
+                                <EditForm Model="editingCategory" OnSubmit="UpdateCategory">
+                                    <InputText @bind-Value="editingCategory.Name" class="form-control" style="max-width: max-content;"></InputText>
+                                </EditForm>
+                            </td>
+                            <td>
+                                <EditForm Model="editingCategory" OnSubmit="UpdateCategory">
+                                    <InputText @bind-Value="editingCategory.Url" class="form-control" style="max-width: max-content;"></InputText>
+                                </EditForm>
+                            </td>
+                            <td>
+                                <EditForm Model="editingCategory" OnSubmit="UpdateCategory">
+                                    <InputCheckbox @bind-Value="editingCategory.Visible" style="transform: scale(1.5,1.5);"></InputCheckbox>
+                                </EditForm>
+                            </td>
+                            <td>
+                                <EditForm Model="editingCategory" OnSubmit="UpdateCategory">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </button>
+                                </EditForm>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" @onclick="CancelEditing">
+                                    <i class="fas fa-times-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        @*</EditForm>*@
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                @category.Name
+                            </td>
+                            <td>
+                                @category.Url
+                            </td>
+                            <td>
+                                <span>
+                                    @if (category.Visible)
+                                    {
+                                        <i class="fas fa-check text-success fs-5"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-times text-danger fs-5"></i>
+                                    }
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-outlined" @onclick="(() => EditCategory(category))">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn--primary" @onclick="(() => DeleteCategory(category.Id))">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+@code {
+    Category editingCategory = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CategoryService.GetAdminCategories();
+        CategoryService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        CategoryService.OnChange -= StateHasChanged;
+    }
+
+    private void CreateNewCategory()
+    {
+        editingCategory = CategoryService.CreateNewCategory();
+    }
+
+    private void EditCategory(Category category)
+    {
+        category.Editing = true;
+        editingCategory = category;
+    }
+
+    private async Task UpdateCategory()
+    {
+        if (editingCategory.IsNew)
+        {
+            await CategoryService.AddCategory(editingCategory);
+            ToastService.ShowSuccess("Add category success!");
+        }
+        else
+        {
+            await CategoryService.UpdateCategory(editingCategory);
+            ToastService.ShowSuccess("This category has been updated!");
+        }
+        editingCategory = new Category();
+    }
+
+    private async Task CancelEditing()
+    {
+        editingCategory = new Category();
+        await CategoryService.GetAdminCategories();
+    }
+
+    private async Task DeleteCategory(int id)
+    {
+        ToastService.ShowWarning("Do you really want to delete this category ?If you delete it, you won't be able to recover and some functions may malfunction.");
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm",
+            "Do you really want to delete this category ?");
+        if (confirmed)
+        {
+            await CategoryService.DeleteCategory(id);
+            ToastService.ShowInfo("This category has been deleted");
+        }
+
+    }
+}

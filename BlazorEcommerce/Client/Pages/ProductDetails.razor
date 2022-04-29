@@ -1,0 +1,202 @@
+﻿@page "/product/{id:int}"
+@layout ShopLayout
+@inject IProductService ProductService
+@inject ICartService CartService
+@inject NavigationManager navigationManager
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a onclick="@(()=> navigationManager.NavigateTo("",true))">Home</a></li>
+                    <li class="breadcrumb-item active">Product Details</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+@if (product == null)
+{
+    <span>@message</span>
+}
+else
+{
+    @*<div class="media">
+        <div class="media-img-wrapper mr-2">
+        <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+        </div>
+        <div class="media-body">
+        <h2 class="mb-0">@product.Title</h2>
+        <p>@product.Description</p>
+        @if (product.Variants != null && product.Variants.Count > 1)
+        {
+        <div class="mb-3">
+        <select class="form-select" @bind="currentTypeId">
+        @foreach (var variant in product.Variants)
+        {
+        <option value="@variant.ProductTypeId">@variant.ProductType.Name</option>
+        }
+        </select>
+        </div>
+        }
+        @if (GetSelectedVariant() != null)
+        {
+        @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
+        {
+        <h6 class="text-muted original-price">
+        $@GetSelectedVariant().OriginalPrice
+        </h6>
+        }
+        <h4 class="price">
+        $@GetSelectedVariant().Price
+        </h4>
+        }
+        <button class="btn btn-primary" @onclick="AddToCart">
+        <i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Add to Cart
+        </button>
+        </div>
+        </div>*@
+
+    <main class="inner-page-sec-padding-bottom">
+        <div class="container">
+            <div class="row  mb--60">
+                <div class="col-lg-5 mb--30">
+                    <!-- Product Details Slider Big Image-->
+                <div class="product-details-slider sb-slick-slider arrow-type-two">
+                        <div class="single-slide">
+                            <img src="@product.ImageUrl" alt="">
+                        </div>
+                    </div>
+                    <!-- Product Details Slider Nav -->
+            </div>
+                <div class="col-lg-7">
+                    <div class="product-details-info pl-lg--30 ">
+                        <p class="tag-block">Tags: <a href="#">Movado</a>, <a href="#">Omega</a></p>
+                        <h3 class="product-title">Beats EP Wired On-Ear Headphone-Black</h3>
+                        <ul class="list-unstyled">
+                            <li>Ex Tax: <span class="list-value"> £60.24</span></li>
+                            <li>Brands: <a href="#" class="list-value font-weight-bold"> Canon</a></li>
+                            <li>Product Code: <span class="list-value"> model1</span></li>
+                            <li>Reward Points: <span class="list-value"> 200</span></li>
+                            <li>Availability: <span class="list-value"> In Stock</span></li>
+                        </ul>
+                        <div class="price-block">
+                            @if (GetSelectedVariant() != null)
+                            {
+                                <span class="price-new">
+                                    $@GetSelectedVariant().Price
+                                </span>
+                                @if (GetSelectedVariant().OriginalPrice > GetSelectedVariant().Price)
+                                {
+                                    <del class="price-old">
+                                        $@GetSelectedVariant().OriginalPrice
+                                    </del>
+                                }
+                            }
+                        </div>
+                        <div class="variable-block mb--30">
+                            <h3 class="title">Available Options</h3>
+                            @if (product.Variants != null && product.Variants.Count > 1)
+                            {
+                                <select class="form-select" @bind="currentTypeId">
+                                    @foreach (var variant in product.Variants)
+                                    {
+                                        <option value="@variant.ProductTypeId">@variant.ProductType.Name</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                        <div class="add-to-cart-row">
+                            <div class="count-input-block">
+                                <span class="widget-label">Qty</span>
+                                <input type="number" class="form-control text-center" value="1">
+                            </div>
+                            <div class="add-cart-btn">
+                                <button class="btn btn-outlined--primary" @onclick="AddToCart" >
+                                    <span class="plus-icon">+</span>Add to
+                                    Cart
+                                </button>
+                            </div>
+                        </div>
+                        <div class="compare-wishlist-row">
+                            <a href="javascript:void(0)" class="add-link"><i class="fas fa-heart"></i>Add to Wish List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sb-custom-tab review-tab section-padding">
+                <ul class="nav nav-tabs nav-style-2">
+                    <li class="nav-item">
+                        <a class="nav-link active">
+                            DESCRIPTION
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content space-db--20" id="myTabContent">
+                    <div class="tab-pane fade show active">
+                        <article class="review-article">
+                            <h1 class="sr-only">Tab Article</h1>
+                            <p>
+                                @product.Description
+                            </p>
+                        </article>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+</main>
+
+}
+
+
+
+@code {
+    private Product? product = null;
+    private string message = string.Empty;
+    private int currentTypeId = 1;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        message = "Loading product...";
+
+        var result = await ProductService.GetProduct(Id);
+        if (!result.Success)
+        {
+            message = result.Message;
+        }
+        else
+        {
+            product = result.Data;
+            if (product.Variants.Count > 0)
+            {
+                currentTypeId = product.Variants[0].ProductTypeId;
+            }
+        }
+    }
+
+    private ProductVariant GetSelectedVariant()
+    {
+        var variant = product.Variants.FirstOrDefault(v => v.ProductTypeId == currentTypeId);
+        return variant;
+    }
+
+    private async Task AddToCart()
+    {
+        var productVariant = GetSelectedVariant();
+        var cartItem = new CartItem
+            {
+                ProductId = productVariant.ProductId,
+                ProductTypeId = productVariant.ProductTypeId
+            };
+
+        await CartService.AddToCart(cartItem);
+        
+    }
+}

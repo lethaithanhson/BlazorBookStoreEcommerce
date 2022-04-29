@@ -1,0 +1,110 @@
+﻿@inject IProductService ProductService
+@implements IDisposable
+
+@if (ProductService.Products == null || ProductService.Products.Count == 0)
+{
+    <span>@ProductService.Message</span>
+}
+else
+{
+    //<ul class="list-unstyled">
+    <div class="container mt--50 mb--50">
+        <div class="shop-product-wrap row shop-border">
+            @foreach (var product in ProductService.Products)
+            {
+                @* <li class="media my-3">
+                    <div class="media-img-wrapper mr-2">
+                    <a href="/product/@product.Id">
+                    <img class="media-img" src="@product.ImageUrl" alt="@product.Title" />
+                    </a>
+                    </div>
+                    <div class="media-body">
+                    <a href="/product/@product.Id">
+                    <h4 class="mb-0">@product.Title</h4>
+                    </a>
+                    <p>@product.Description</p>
+                    <h5 class="price">
+                    @GetPriceText(product)
+                    </h5>
+                    </div>
+                    </li>*@
+                <div class="col-lg-4 col-sm-6">
+                    <div class="product-card">
+                        <div class="product-grid-content">
+                            <div class="product-header">
+                                <a class="author">
+                                    Epple
+                                </a>
+                                <h3><a href="/product/@product.Id">@product.Title</a></h3>
+                            </div>
+                            <div class="product-card--body">
+                                <div class="card-image">
+                                    <img src="@product.ImageUrl" alt="">
+                                    <div class="hover-contents">
+                                        <a href="/product/@product.Id" class="hover-image">
+                                            <img src="@product.ImageUrl" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="price-block">
+                                    @if (product.Variants.Count == 0)
+                                    {
+                                        <span class="price">Empty</span>
+                                    }
+                                    else if (product.Variants.Count >= 1)
+                                    {
+                                        @if (product.Variants[0].OriginalPrice > product.Variants[0].Price)
+                                        {
+                                            <span class="price">$ @product.Variants[0].Price</span>
+                                            <del class="price-old">$ @product.Variants[0].OriginalPrice</del>
+                                            <span class="price-discount">Sale</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="price">$ @product.Variants[0].Price</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    //</ul>
+    for (var i = 1; i <= ProductService.PageCount; i++)
+    {
+        <a class="btn
+                 @(i == ProductService.CurrentPage ? "btn-info" : "btn-outline-info")
+                 page-selection"
+   href="/search/@ProductService.LastSearchText/@i">@i</a>
+    }
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        ProductService.ProductsChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        ProductService.ProductsChanged -= StateHasChanged;
+    }
+
+    private string GetPriceText(Product product)
+    {
+        var variants = product.Variants;
+        if (variants.Count == 0)
+        {
+            return string.Empty;
+        }
+        else if (variants.Count == 1)
+        {
+            return $"${variants[0].Price}";
+        }
+        decimal minPrice = variants.Min(v => v.Price);
+        return $"Starting at ${minPrice}";
+    }
+}

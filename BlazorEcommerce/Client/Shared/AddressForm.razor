@@ -1,0 +1,171 @@
+﻿@inject IAddressService AddressService
+@inject IToastService ToastService
+
+@*
+    @if (address == null)
+    {
+    <span>
+    You haven't specified a delivery address, yet.
+    <button class="btn" @onclick="InitAddress">Add an address?</button>
+    </span>
+    }
+    else if (!editAddress)
+    {
+    <p>
+    <span>@address.FirstName @address.LastName</span><br />
+    <span>@address.Street</span><br />
+    <span>@address.City, @address.State, @address.Zip</span><br />
+    <span>@address.Country</span><br />
+    </p>
+    <button class="btn btn-primary" @onclick="EditAddress">Edit</button>
+    }
+    else
+    {
+    <EditForm Model="address" OnSubmit="SubmitAddress">
+    <div class="mb-3">
+    <label for="firstname">First Name</label>
+    <InputText id="firstname" @bind-Value="address.FirstName" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label for="lastname">Last Name</label>
+    <InputText id="lastname" @bind-Value="address.LastName" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label for="street">Street</label>
+    <InputText id="street" @bind-Value="address.Street" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label for="city">City</label>
+    <InputText id="city" @bind-Value="address.City" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label for="state">State</label>
+    <InputText id="state" @bind-Value="address.State" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label for="zip">ZIP/Postal Code</label>
+    <InputText id="zip" @bind-Value="address.Zip" class="form-control" />
+    </div>
+    <div class="mb-3">
+    <label for="country">Country</label>
+    <InputText id="country" @bind-Value="address.Country" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+    }*@
+
+
+@if (address == null)
+{
+    <span>
+        You haven't specified a delivery address, yet.
+        <button class="btn btn--primary" @onclick="InitAddress">Add an address?</button>
+    </span>
+}
+else if (!editAddress)
+{
+    <div class="row">
+        <div class="col-md-6 col-12 mb--20">
+            <label>First Name*</label>
+            <input type="text" placeholder="First Name" value="@address.FirstName" disabled>
+        </div>
+        <div class="col-md-6 col-12 mb--20">
+            <label>Last Name*</label>
+            <input type="text" placeholder="Last Name" value="@address.LastName" disabled>
+        </div>
+        <div class="col-md-12 col-12 mb--20">
+            <label>Phone no*</label>
+            <input type="text" placeholder="Phone number" value="@address.Phone" disabled>
+        </div>
+        <div class="col-md-12 col-12 mb--20">
+            <label>Country*</label>
+            <input type="text" placeholder="Country" value="@address.Country" disabled>
+        </div>
+        <div class="col-md-6 col-12 mb--20">
+            <label>Town/City*</label>
+            <input type="text" placeholder="Town/City" value="@address.City" disabled>
+        </div>
+        <div class="col-md-6 col-12 mb--20">
+            <label>State*</label>
+            <input type="text" placeholder="State" value="@address.State" disabled>
+        </div>
+        <div class="col-md-6 col-12 mb--20">
+            <label>Street*</label>
+            <input type="text" placeholder="Street" value="@address.Street" disabled>
+        </div>
+        <div class="col-md-6 col-12 mb--20">
+            <label>Zip Code*</label>
+            <input type="text" placeholder="Zip Code" value="@address.Zip" disabled>
+        </div>
+    </div>
+    <button class="btn btn--primary" @onclick="EditAddress"> <i class="fa fa-edit"></i>Edit Address</button>
+}
+else
+{
+    <EditForm Model="address" OnSubmit="SubmitAddress">
+        <div class="row">
+            <div class="col-md-6 col-12 mb--20">
+                <label>First Name*</label>
+                <InputText id="firstname" @bind-Value="address.FirstName" placeholder="First Name" />
+            </div>
+            <div class="col-md-6 col-12 mb--20">
+                <label>Last Name*</label>
+                <InputText id="lastname" @bind-Value="address.LastName" placeholder="Last Name" />
+            </div>
+            <div class="col-md-12 col-12 mb--20">
+                <label>Phone no*</label>
+                <InputText id="phone" @bind-Value="address.Phone" placeholder="Phone number" />
+            </div>
+            <div class="col-md-12 col-12 mb--20">
+                <label>Country*</label>
+                <InputText id="country" @bind-Value="address.Country" placeholder="Country" />
+            </div>
+            <div class="col-md-6 col-12 mb--20">
+                <label>Town/City*</label>
+                <InputText id="city" @bind-Value="address.City" placeholder="Town/City" />
+            </div>
+            <div class="col-md-6 col-12 mb--20">
+                <label>State*</label>
+                <InputText id="state" @bind-Value="address.State" placeholder="State" />
+            </div>
+            <div class="col-md-6 col-12 mb--20">
+                <label>Street*</label>
+                <InputText id="street" @bind-Value="address.Street" placeholder="Street" />
+            </div>
+            <div class="col-md-6 col-12 mb--20">
+                <label>Zip Code*</label>
+                <InputText id="zip" @bind-Value="address.Zip" placeholder="Zip Code" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn--primary">Save</button>
+    </EditForm>
+}
+
+
+@code {
+    Address address = null;
+    bool editAddress = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        address = await AddressService.GetAddress();
+    }
+
+    private async Task SubmitAddress()
+    {
+        editAddress = false;
+        address = await AddressService.AddOrUpdateAddress(address);
+        ToastService.ShowSuccess("Address is saving!");
+    }
+
+    private void InitAddress()
+    {
+        address = new Address();
+        editAddress = true;
+    }
+
+    private void EditAddress()
+    {
+        editAddress = true;
+    }
+}

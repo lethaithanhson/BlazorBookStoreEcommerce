@@ -1,0 +1,101 @@
+﻿@inject ICartService CartService
+@inject ISyncLocalStorageService LocalStorage
+@implements IDisposable
+
+
+<div class="cart-total">
+    <span class="text-number">
+        @GetCartItemsCount()
+    </span>
+    <span class="text-item">
+        Shopping Cart
+    </span>
+    <span class="price">
+        $
+        @if (CartService.CartProducts != null)
+        {
+            @CartService.CartProducts.Sum(p => p.Price * p.Quantity)
+        }
+        else
+        {
+            @((MarkupString)"00.00")
+        }
+        <i class="fas fa-chevron-down"></i>
+    </span>
+</div>
+<div class="cart-dropdown-block">
+    <div class=" single-cart-block ">
+        @if (CartService.CartProducts == null || CartService.CartProducts.Count == 0)
+        {
+            <img src="Shop/image/cart_empty.png" class="cart-empty" />
+        }
+        else
+        {
+            @foreach (var product in CartService.CartProducts.Take(2))
+            {
+                <div class="cart-product">
+                    <a href="product/@product.ProductId" class="image">
+                        <img src="@product.ImageUrl" alt="">
+                    </a>
+                    <div class="content">
+                        <h3 class="title">
+                            <a href="product/@product.ProductId">
+                                @product.Title
+                            </a>
+                        </h3>
+                        <p class="price"><span class="qty">@product.Quantity ×</span> $@(product.Price * product.Quantity)</p>
+                    </div>
+                </div>
+            }
+            @if (CartService.CartProducts.Count > 2)
+            {
+                @((MarkupString)$"&emsp;And {GetCartItemsCount()-2} more...")
+            }
+        }
+    </div>
+    <div class=" single-cart-block ">
+        <div class="btn-block">
+            <a href="/cart" class="btn">
+                View Cart <i class="fas fa-chevron-right"></i>
+            </a>
+            <a href="/checkout" class="btn btn--primary">
+                Check Out <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+    List<CartProductResponse> cartProducts = null;
+    private int GetCartItemsCount()
+    {
+        var count = LocalStorage.GetItem<int>("cartItemsCount");
+        return count;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCart();
+    }
+
+    private async Task LoadCart()
+    {
+        await CartService.GetCartItemsCount();
+        await CartService.GetCartProducts();
+    }
+
+
+    protected override void OnInitialized()
+    {
+        CartService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        CartService.OnChange -= StateHasChanged;
+    }
+
+}

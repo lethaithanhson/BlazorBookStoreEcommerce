@@ -1,0 +1,31 @@
+﻿
+::deep .WMBSC {
+    max-width: 100vw;
+}
+::deep .WMBSC[b-ym8nfzch4d] .slick-dots{
+    margin: 0 0 20px 0;
+}
+::deep .WMBSC[b-ym8nfzch4d] .slick-dotted.slick-slider {
+    margin-bottom: 0;
+}
+::deep .product-slider.sb-slick-slider .slick-dots li,
+::deep .sb-slick-slider.testimonial-slider .slick-dots li {
+    width: 11px !important;
+    height: 11px !important;
+}
+.testimonial-slider .single-slide {
+    margin: 0;
+}
+.product-slider .slick-slide img {
+    height: 220px;
+    width: 220px;
+    object-fit: contain;
+}
+.product-slider .product-card h3 {
+    height: 45px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+

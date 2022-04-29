@@ -1,0 +1,115 @@
+﻿.row {
+    display: flex;
+    padding: 6px;
+}
+
+.col {
+    flex: 1;
+}
+
+.header {
+    display: flex;
+    font-weight: 600;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    align-items: center;
+}
+
+.col-visible {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+::deep .col-select {
+    width: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid transparent;
+    border-radius: 0;
+    line-height: 23px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #14191e;
+    margin-bottom: 15px;
+}
+::deep .col-select:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+    border-color: #62ab00;
+}
+::deep .order-note-block textarea {
+    height: 150px;
+}
+::deep .order-note-block textarea:focus {
+    box-shadow: none;
+    outline: none;
+    border: 1px solid #62ab00;
+}
+
+.img_wrapper {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    border: 2px dashed #c2cdda;
+    border-radius: 10px;
+    /*background: #f4f4f4;*/
+    overflow: hidden;
+}
+.img_wrapper .img_input-block{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+::deep .input_file {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    left: -999px;
+    opacity: 0;
+}
+.img_wrapper .img_label{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+.img_wrapper .img_text{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.img_wrapper .img_text i {
+    font-size: 50px;
+    color: #808080;
+    margin-bottom: 15px
+}
+.img_wrapper .img_text span {
+    font-size: 15px;
+    color: #808080;
+    font-weight: 600;
+}
+.img_wrapper .img_content{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.img_wrapper .img_content img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.img_wrapper.active {
+    border: 2px solid transparent;
+}

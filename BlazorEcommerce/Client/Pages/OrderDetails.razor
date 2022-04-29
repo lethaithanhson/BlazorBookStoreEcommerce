@@ -1,0 +1,63 @@
+﻿@page "/orders/{orderId:int}"
+@inject IOrderService OrderService
+@inject NavigationManager navigationManager
+@layout ShopLayout
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a onclick="@(()=> navigationManager.NavigateTo("",true)) ">Home</a></li>
+                    <li class="breadcrumb-item"><a onclick="@(()=> navigationManager.NavigateTo("/profile"))">My Account</a></li>
+                    <li class="breadcrumb-item active">Order Detail</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+@if (order == null)
+{
+    <span>Loading order...</span>
+}
+else
+{
+    <div class="container">
+        <h1 class="quick-title">Order from <span class="order-date"> @order.OrderDate</span></h1>
+        @foreach (var product in order.Products)
+        {
+                <div class="col-12">
+                    <div class="checkout-quick-box">
+                        <div class="image-wrapper">
+                            <img src="@product.ImageUrl" class="image" />
+                        </div>
+                        <div class="name">
+                            <h5><a href="/product/@product.ProductId">@product.Title</a></h5>
+                            <span>@product.ProductType</span><br />
+                            <span>Quantity: @product.Quantity</span>
+                        </div>
+                        <div class="product-price">$@product.TotalPrice</div>
+                    </div>
+                </div>
+        }
+        <div class="total-price">
+            Total: $@order.TotalPrice
+        </div>
+    </div>
+
+
+}
+
+@code {
+    [Parameter]
+    public int OrderId { get; set; }
+
+    public OrderDetailsResponse order = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        order = await OrderService.GetOrderDetails(OrderId);
+    }
+}

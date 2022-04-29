@@ -1,0 +1,8 @@
+﻿.product-img {
+    height: 100px;
+    max-width: 100px;
+    object-fit: contain;
+}
+::deep .rz-paginator-bottom{
+    margin-top: 50px !important;
+}

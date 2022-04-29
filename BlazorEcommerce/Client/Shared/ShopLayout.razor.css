@@ -1,0 +1,3 @@
+::deep .blazored-toast-container {
+    z-index: 1000000!important;
+}
