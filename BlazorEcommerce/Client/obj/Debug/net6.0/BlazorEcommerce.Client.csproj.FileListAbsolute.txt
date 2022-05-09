@@ -835,7 +835,6 @@ D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\s
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Admin\Categories.razor.rz.scp.css
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Admin\EditProduct.razor.rz.scp.css
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Admin\Products.razor.rz.scp.css
-D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Admin\ProductTypes.razor.rz.scp.css
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Cart.razor.rz.scp.css
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\OrderDetails.razor.rz.scp.css
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Orders.razor.rz.scp.css
@@ -870,3 +869,4 @@ D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\bin\Debug\net6.0\S
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\build-gz\D4M3l1C+.gz
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\build-gz\PV57IpG5.gz
 D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Shared\Admin\NavMenu.razor.rz.scp.css
+D:\WebBlazor\Patricgod\BlazorEcommerce\BlazorEcommerce\Client\obj\Debug\net6.0\scopedcss\Pages\Admin\Users.razor.rz.scp.css

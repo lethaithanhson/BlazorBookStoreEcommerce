@@ -38,5 +38,16 @@
             var result = await _http.GetFromJsonAsync<ServiceResponse<List<UserResponse>>>("api/auth");
             return result.Data;
         }
+
+        public async Task<ServiceResponse<bool>> LockOrUnlock(int userId)
+        {
+            var result = await _http.PutAsJsonAsync($"api/auth/{userId}/lockorunlock", userId);
+            return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
+        }
+        public async Task<ServiceResponse<bool>> UserRole(int userId, UserResponse userResponse)
+        {
+            var result = await _http.PutAsJsonAsync($"api/auth/{userId}/userrole", userResponse);
+            return await result.Content.ReadFromJsonAsync<ServiceResponse<bool>>();
+        }
     }
 }

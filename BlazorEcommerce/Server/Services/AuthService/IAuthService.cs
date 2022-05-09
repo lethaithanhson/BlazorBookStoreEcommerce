@@ -11,5 +11,7 @@
         string GetUserEmailById(int userId);
         Task<User> GetUserByEmail(string email);
         Task<ServiceResponse<List<UserResponse>>> GetUsers();
+        Task<ServiceResponse<bool>> LockOrUnclock(int userId);
+        Task<ServiceResponse<bool>> UserRole(int userId, UserResponse userResponse);
     }
 }

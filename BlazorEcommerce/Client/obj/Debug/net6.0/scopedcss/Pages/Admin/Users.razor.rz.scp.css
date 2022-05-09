@@ -1,0 +1,36 @@
+.action-btn[b-2w9g74c8fb]{
+    width: 30px;
+    height: 30px;
+    border-radius:5px;
+    margin-right: 10px;
+}
+
+.action-btn-unlock[b-2w9g74c8fb] {
+    background: rgba(41,180,116,0.08);
+    color: #29b474;
+}
+
+.action-btn-unlock:hover[b-2w9g74c8fb] {
+   color: #29b474;
+    background-color: rgba(41,180,116,0.5);
+}
+
+.action-btn-info[b-2w9g74c8fb] {
+    background: rgba(47,128,237,0.08);
+    color: #2f80ed;
+}
+
+.action-btn-info:hover[b-2w9g74c8fb] {
+    color: #2f80ed;
+    background-color: rgba(47,128,237,0.5);
+}
+
+.action-btn-lock[b-2w9g74c8fb] {
+    background: rgba(235,87,87,0.08);
+    color: #eb5757;
+}
+
+.action-btn-lock:hover[b-2w9g74c8fb] {
+    color: #eb5757;
+    background-color: rgba(235,87,87,0.5);
+}

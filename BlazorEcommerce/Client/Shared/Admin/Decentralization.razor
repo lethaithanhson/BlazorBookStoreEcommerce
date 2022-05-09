@@ -1,0 +1,78 @@
+﻿@inject IToastService ToastService
+@inject IAuthService AuthService
+
+@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="authModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <EditForm Model="Model" OnSubmit="HandleAuthenticationSubmit">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">User Authorization</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="()=>Hide()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="roleName" class="col-form-label">Role</label>
+                        <InputSelect class="form-control" @bind-Value="Model.Role" id="roleName">
+                            <option value="Admin">Admin</option>
+                            <option value="Customer">Customer</option>
+                            <option value="Staff">Staff</option>
+                        </InputSelect>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="()=>Hide()">Close</button>
+                        <button type="submit" class="btn btn-primary" >Save changes</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private UserResponse Model { get; set; } = new UserResponse();
+    protected bool ShowDialog { get; set; }
+    private int UserId;
+    private string Role;
+
+    [Parameter]
+    public EventCallback<bool> CloseEventCallback { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Model.Id = UserId;
+        Model.Role = Role;
+    }
+
+    public void Show(int userId, string role)
+    {
+        ShowDialog = true;
+        UserId = userId;
+        Role = role;
+        StateHasChanged();
+    }
+
+    private void Hide()
+    {
+        ShowDialog = false;
+        StateHasChanged();
+    }
+
+    protected async Task HandleAuthenticationSubmit()
+    {
+        var result = await AuthService.UserRole(UserId, Model);
+        if (result.Data)
+        {
+            ShowDialog = false;
+            await CloseEventCallback.InvokeAsync(true);
+            ToastService.ShowSuccess("Authorization success ");
+        }
+        else
+        {
+            ToastService.ShowError("Authorization failed");
+        }
+    }
+
+}

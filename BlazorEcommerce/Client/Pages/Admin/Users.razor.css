@@ -1,0 +1,36 @@
+﻿.action-btn{
+    width: 30px;
+    height: 30px;
+    border-radius:5px;
+    margin-right: 10px;
+}
+
+.action-btn-unlock {
+    background: rgba(41,180,116,0.08);
+    color: #29b474;
+}
+
+.action-btn-unlock:hover {
+   color: #29b474;
+    background-color: rgba(41,180,116,0.5);
+}
+
+.action-btn-info {
+    background: rgba(47,128,237,0.08);
+    color: #2f80ed;
+}
+
+.action-btn-info:hover {
+    color: #2f80ed;
+    background-color: rgba(47,128,237,0.5);
+}
+
+.action-btn-lock {
+    background: rgba(235,87,87,0.08);
+    color: #eb5757;
+}
+
+.action-btn-lock:hover {
+    color: #eb5757;
+    background-color: rgba(235,87,87,0.5);
+}

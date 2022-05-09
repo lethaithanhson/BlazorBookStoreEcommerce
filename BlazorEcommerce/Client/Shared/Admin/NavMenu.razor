@@ -13,20 +13,29 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/admin/categories">
+                <span class="oi fas fa-layer-group" aria-hidden="true"></span> Category
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
             <NavLink class="nav-link" href="/admin/products">
                 <span class="oi fas fa-book-open" aria-hidden="true"></span> Product
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/admin/categories">
-                <span class="oi fas fa-layer-group" aria-hidden="true"></span> Category
+            <NavLink class="nav-link" href="/admin/product-types">
+                <span class="oi fas fa-list-alt" aria-hidden="true"></span> Product Types
             </NavLink>
         </li>
-         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi fas fa-user-friends" aria-hidden="true"></span> User
-            </NavLink>
-        </li>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/admin/users">
+                        <span class="oi fas fa-user-friends" aria-hidden="true"></span> User
+                    </NavLink>
+                </li>
+            </Authorized>
+        </AuthorizeView>
     </ul>
 </div>
 

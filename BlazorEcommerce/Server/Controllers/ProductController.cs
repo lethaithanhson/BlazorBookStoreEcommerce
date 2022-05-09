@@ -15,21 +15,21 @@ namespace BlazorEcommerce.Server.Controllers
             _productService = productService;
         }
 
-        [HttpGet("admin"), Authorize(Roles = "Admin")]
+        [HttpGet("admin"), Authorize(Roles = "Admin , Staff")]
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetAdminProducts()
         {
             var result = await _productService.GetAdminProducts();
             return Ok(result);
         }
 
-        [HttpPost, Authorize(Roles = "Admin")]
+        [HttpPost, Authorize(Roles = "Admin , Staff")]
         public async Task<ActionResult<ServiceResponse<Product>>> CreateProduct(Product product)
         {
             var result = await _productService.CreateProduct(product);
             return Ok(result);
         }
 
-        [HttpPut, Authorize(Roles = "Admin")]
+        [HttpPut, Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<ServiceResponse<Product>>> UpdateProduct(Product product)
         {
             var result = await _productService.UpdateProduct(product);

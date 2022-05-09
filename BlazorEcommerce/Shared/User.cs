@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BlazorEcommerce.Shared.Enum;
 
 namespace BlazorEcommerce.Shared
 {
@@ -15,5 +11,6 @@ namespace BlazorEcommerce.Shared
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public Address Address { get; set; }
         public string Role { get; set; } = "Customer";
+        public AccountStatus Status { get; set; }
     }
 }

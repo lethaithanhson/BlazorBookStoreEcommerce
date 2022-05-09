@@ -35,13 +35,13 @@ namespace BlazorEcommerce.Server.Controllers
             var result = await _orderService.AddOrder(CartItems);
             return Ok(result);
         }
-        [HttpGet("admin"), Authorize(Roles = "Admin")]
+        [HttpGet("admin"), Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<ServiceResponse<List<OrderOverviewResponse>>>> GetAdminOrder()
         {
             var result = await _orderService.GetAdminOrder();
             return Ok(result);
         }
-        [HttpGet("admin/turnover"), Authorize(Roles = "Admin")]
+        [HttpGet("admin/turnover"), Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<ServiceResponse<List<OrderOverviewResponse>>>> GetTurnover()
         {
             var result = await _orderService.GetTurnover();

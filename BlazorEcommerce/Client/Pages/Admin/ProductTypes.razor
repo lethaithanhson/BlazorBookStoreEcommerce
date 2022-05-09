@@ -1,44 +1,47 @@
 ﻿@page "/admin/product-types"
 @inject IProductTypeService ProductTypeService
 @implements IDisposable
-@attribute [Authorize(Roles = "Admin")]
+@attribute [Authorize(Roles = "Admin, Staff")]
 
-<h3>Product Types</h3>
+<h4 class="checkout-title">Product Types</h4>
 
-@foreach (var productType in ProductTypeService.ProductTypes)
-{
-    @if (productType.Editing)
+<div class="container">
+    @foreach (var productType in ProductTypeService.ProductTypes)
     {
-        <EditForm Model="editingProductType" OnSubmit="UpdateProductType">
-            <div class="row">
-                <div class="col">
-                    <InputText @bind-Value="editingProductType.Name" class="form-control"></InputText>
+        @if (productType.Editing)
+        {
+            <EditForm Model="editingProductType" OnSubmit="UpdateProductType">
+                <div class="row">
+                    <div class="col">
+                        <InputText @bind-Value="editingProductType.Name" class="form-control"></InputText>
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="oi oi-cloud-upload"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="oi oi-cloud-upload"></i>
+            </EditForm>
+        }
+        else
+        {
+            <div class="row py-3 border-bottom border-light">
+                <div class="col-6 d-flex align-items-center">
+                    @productType.Name
+                </div>
+                <div class="col-6 d-flex justify-content-end">
+                    <button class="btn btn--primary" @onclick="@(() => EditProductType(productType))">
+                        <i class="fas fa-edit"></i>
                     </button>
                 </div>
             </div>
-        </EditForm>
+        }
     }
-    else
-    {
-        <div class="row">
-            <div class="col">
-                @productType.Name
-            </div>
-            <div class="col">
-                <button class="btn btn-primary" @onclick="@(() => EditProductType(productType))">
-                    <i class="oi oi-pencil"></i>
-                </button>
-            </div>
-        </div>
-    }
-}
-<button class="btn btn-primary" @onclick="CreateNewProductType">
-    <i class="oi oi-plus"></i> Add new product type
-</button>
+    <button class="btn btn-primary mt-3" @onclick="CreateNewProductType">
+        <i class="fas fa-plus pe-2"></i> Add new product type
+    </button>
+
+</div>
 
 @code {
     ProductType editingProductType = null;

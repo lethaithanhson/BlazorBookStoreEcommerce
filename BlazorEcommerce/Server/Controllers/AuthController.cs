@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BlazorEcommerce.Shared.Enum;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -22,7 +23,8 @@ namespace BlazorEcommerce.Server.Controllers
             var response = await _authService.Register(
                 new User
                 {
-                    Email = request.Email
+                    Email = request.Email,
+                    Status = AccountStatus.Unlock
                 },
                 request.Password);
 
@@ -59,10 +61,22 @@ namespace BlazorEcommerce.Server.Controllers
 
             return Ok(response);
         }
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet, Authorize(Roles = "Admin, Staff")]
         public async Task<ActionResult<List<UserResponse>>> GetUsers()
         {
             var response = await _authService.GetUsers();
+            return Ok(response);
+        }
+        [HttpPut("{userId}/lockorunlock"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<bool>>> LockOrUnlock(int userId){
+            var response = await _authService.LockOrUnclock(userId);
+            return Ok(response);
+        }
+
+        [HttpPut("{userId}/userrole"), Authorize(Roles ="Admin")]
+        public async Task<ActionResult<ServiceResponse<bool>>> UserRole(int userId, [FromBody] UserResponse userResponse)
+        {
+            var response = await _authService.UserRole(userId, userResponse);
             return Ok(response);
         }
     }

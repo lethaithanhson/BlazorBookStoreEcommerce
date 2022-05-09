@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using BlazorEcommerce.Shared.Enum;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -36,6 +37,10 @@ namespace BlazorEcommerce.Server.Services.AuthService
                 response.Success = false;
                 response.Message = "User not found.";
             }
+            else if(user.Status == AccountStatus.Lock){
+                response.Success = false;
+                response.Message = "Your account is Lock !";
+            }
             else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
                 response.Success = false;
@@ -45,7 +50,6 @@ namespace BlazorEcommerce.Server.Services.AuthService
             {
                 response.Data = CreateToken(user);
             }
-
             return response;
         }
 
@@ -171,10 +175,53 @@ namespace BlazorEcommerce.Server.Services.AuthService
                 Address = u.Address,
                 Email = u.Email,
                 DateCreated = u.DateCreated,
-                Role = u.Role
+                Role = u.Role,
+                Status = u.Status
             }));
             response.Data = userResponse;
             return response;
+        }
+        public async Task<ServiceResponse<bool>> LockOrUnclock(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if(user == null)
+            {
+                return new ServiceResponse<bool> { Data = false, Success = false, Message = "User not fount." };
+            }else
+            {
+                var response = new ServiceResponse<bool>();
+                if(user.Status == AccountStatus.Unlock)
+                {
+                    user.Status = AccountStatus.Lock;
+                    await _context.SaveChangesAsync();
+                    response.Data = true;
+                    response.Success = true;
+                    response.Message = $"Account {user.Email} has been locked";
+                }
+                else if (user.Status == AccountStatus.Lock)
+                {
+                    user.Status = AccountStatus.Unlock;
+                    await _context.SaveChangesAsync();
+                    response.Data = true;
+                    response.Success = true;
+                    response.Message = $"Account {user.Email} has been unlocked";
+                }
+                return response;
+            }
+        }
+        public async Task<ServiceResponse<bool>> UserRole(int userId, UserResponse userResponse)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return new ServiceResponse<bool> { Data = false, Success = false, Message = "User not fount." };
+            }
+            else
+            {
+                user.Role = userResponse.Role;
+                await _context.SaveChangesAsync();
+                return new ServiceResponse<bool> { Data = true, Success = true, Message = "successful decentralization" };
+            }
         }
     }
 }

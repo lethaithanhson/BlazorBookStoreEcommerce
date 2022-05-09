@@ -7,5 +7,7 @@
         Task<ServiceResponse<bool>> ChangePassword(UserChangePassword request);
         Task<bool> IsUserAuthenticated();
         Task<List<UserResponse>> GetUsers();
+        Task<ServiceResponse<bool>> LockOrUnlock(int userId);
+        Task<ServiceResponse<bool>> UserRole(int userId, UserResponse userResponse);
     }
 }

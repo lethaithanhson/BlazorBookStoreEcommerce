@@ -621,9 +621,6 @@ namespace BlazorEcommerce.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
@@ -636,9 +633,10 @@ namespace BlazorEcommerce.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.HasIndex("OrderId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
@@ -709,18 +707,9 @@ namespace BlazorEcommerce.Server.Migrations
                     b.Navigation("ProductType");
                 });
 
-            modelBuilder.Entity("BlazorEcommerce.Shared.User", b =>
-                {
-                    b.HasOne("BlazorEcommerce.Shared.Order", null)
-                        .WithMany("Users")
-                        .HasForeignKey("OrderId");
-                });
-
             modelBuilder.Entity("BlazorEcommerce.Shared.Order", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("BlazorEcommerce.Shared.Product", b =>

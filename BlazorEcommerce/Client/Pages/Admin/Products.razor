@@ -1,7 +1,7 @@
 ﻿@page "/admin/products"
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
-@*@attribute [Authorize(Roles = "Admin")]*@
+@attribute [Authorize(Roles = "Admin, Staff")]
 
 <h4 class="checkout-title">Products</h4>
 
@@ -17,48 +17,6 @@ else
                 <i class="fas fa-plus pe-2"></i> New product
             </button>
         </div>
-        @*<table class="table">
-            <thead>
-            <tr>
-            <th></th>
-            <th>Product</th>
-            <th>Variant</th>
-            <th>Price</th>
-            <th>Visible</th>
-            <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <Virtualize Items="ProductService.AdminProducts" Context="product">
-            <tr>
-            <td><img src="@product.ImageUrl" /></td>
-            <td>@product.Title</td>
-            <td>
-            @foreach (var variant in product.Variants)
-            {
-            <span>@variant.ProductType.Name</span>
-
-            <br />
-            }
-            </td>
-            <td>
-            @foreach (var variant in product.Variants)
-            {
-            <span>@variant.Price</span>
-
-            <br />
-            }
-            </td>
-            <td>@(product.Visible ? "✔️" : "")</td>
-            <td>
-            <button class="btn btn-primary" @onclick="(() => EditProduct(product.Id))">
-            <i class="oi oi-pencil"></i>
-            </button>
-            </td>
-            </tr>
-            </Virtualize>
-            </tbody>
-            </table>*@
         <RadzenGrid @ref="ProductGrid" AllowFiltering="false" AllowPaging="true" PageSize="6" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                 Data="ProductService.AdminProducts" TItem="Product" AllowSorting="true">
             <Columns>

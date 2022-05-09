@@ -1,0 +1,86 @@
+﻿@page "/admin/users"
+@using BlazorEcommerce.Client.Shared.Admin
+@using BlazorEcommerce.Shared.Enum
+@inject IAuthService AuthService
+@inject IToastService ToasService
+@attribute [Authorize(Roles = "Admin")]
+
+
+<h4 class="checkout-title">Users</h4>
+
+<div class="container">
+    <RadzenGrid FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" Data="users" TItem="UserResponse" AllowPaging="true" AllowSorting="true">
+        <Columns>
+            <RadzenGridColumn TItem="UserResponse" Property="Id" Title="Id"></RadzenGridColumn>
+            <RadzenGridColumn TItem="UserResponse" Property="Email" Title="Email"></RadzenGridColumn>
+            <RadzenGridColumn TItem="UserResponse" Property="DateCreated" Title="Created Date"></RadzenGridColumn>
+            <RadzenGridColumn TItem="UserResponse" Property="Role" Title="Role">
+                <Template Context="user">
+                    <a @onclick="()=>OpenDecentralizationModal(user.Id, user.Role)">@user.Role</a>
+                </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="UserResponse" Property="Status" Title="Action">
+                <Template Context="user">
+                    @if (user.Status == AccountStatus.Unlock)
+                    {
+                        <button class="action-btn action-btn-unlock" @onclick="()=> LockOrUnlock(user)">
+                            <i class="fas fa-unlock"></i>
+                        </button>
+                    }
+                    else if (user.Status == AccountStatus.Lock)
+                    {
+                        <button class="action-btn action-btn-lock" @onclick="()=> LockOrUnlock(user)">
+                            <i class="fas fa-lock"></i>
+                        </button>
+                    }
+                    <button class="action-btn action-btn-info">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </Template>
+            </RadzenGridColumn>
+        </Columns>
+    </RadzenGrid>
+</div>
+
+
+<Decentralization @ref="decentralizationModal" CloseEventCallback="DecentralizationSuccess"></Decentralization>
+
+@code {
+    private List<UserResponse> users = new List<UserResponse>();
+    protected Decentralization decentralizationModal { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        users = await AuthService.GetUsers();
+    }
+
+    public void OpenDecentralizationModal(int userId, string role)
+    {
+        decentralizationModal.Show(userId, role);
+    }
+
+    public async Task DecentralizationSuccess(bool result)
+    {
+        if (result)
+        {
+            users = await AuthService.GetUsers();
+        }
+    }
+
+    public async Task LockOrUnlock(UserResponse user)
+    {
+        if (user != null)
+        {
+            var result = await AuthService.LockOrUnlock(user.Id);
+            if (result.Success)
+            {
+                ToasService.ShowSuccess(result.Message);
+                users = await AuthService.GetUsers();
+            }
+            else
+            {
+                ToasService.ShowError(result.Message);
+                users = await AuthService.GetUsers();
+            }
+        }
+    }
+}

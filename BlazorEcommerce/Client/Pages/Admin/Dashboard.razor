@@ -1,19 +1,18 @@
 ﻿@page "/admin"
 @using System.Globalization
 @layout MainLayout
-@inject IFileService fileService
 @inject IToastService toastService
 @inject IOrderService OrderService
 @inject IProductService ProductService
 @inject ICategoryService CategoryService
 @inject IAuthService AuthService
+@attribute [Authorize(Roles = "Admin, Staff")]
 
 
 <h4 class="checkout-title">Dashboard</h4>
 
 @if (Orders != null && ProductService.AdminProducts != null && categoryResponses != null && users != null)
 {
-
     <div class="container">
         <div class="row">
             <div class="col-3">

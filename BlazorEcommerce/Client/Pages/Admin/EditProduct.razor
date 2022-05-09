@@ -5,8 +5,8 @@
 @inject ICategoryService CategoryService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
-@inject IFileService fileService
 @inject IToastService toastService
+@attribute [Authorize(Roles = "Admin , Staff")]
 
 
 @if (loading)
@@ -34,7 +34,6 @@ else
                             <div class="img_input-block">
                                 <label for="imageUrl" class="img_label">
                                     <InputFile id="imageUrl" @bind-Value="product.ImageUrl" class="input_file" OnChange="OnFileChange" accept="image/jpg , image/png , image/gif"></InputFile>
-                                    @*<InputText id="imageUrl" @bind-Value="product.ImageUrl" class="input_file"></InputText>*@
                                     <div class="img_text">
                                         <i class="fas fa-cloud-upload-alt"></i>
                                         <span>Browser Image to Upload</span>
@@ -123,11 +122,16 @@ else
 
                     <div class="col-12 d-flex justify-content-end">
                         <button type="submit" class="btn btn--primary mr-3">@btnText</button>
+
                         @if (!product.IsNew)
                         {
-                            <button type="button" class="btn btn-danger" @onclick="DeleteProduct">
-                                Delete Product
-                            </button>
+                            <AuthorizeView Roles="Admin" Context="user">
+                                <Authorized>
+                                    <button type="button" class="btn btn-danger" @onclick="DeleteProduct">
+                                        Delete Product
+                                    </button>
+                                </Authorized>
+                            </AuthorizeView>
                         }
                     </div>
                 </div>
