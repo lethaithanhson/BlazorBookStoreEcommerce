@@ -375,9 +375,12 @@
     margin: 0;
 }
 .product-slider .slick-slide img[b-mkldjm4yjh] {
-    height: 220px;
+    height: 300px;
     width: 220px;
-    object-fit: contain;
+    object-fit: cover;
+}
+.product-slider .product-card[b-mkldjm4yjh]{
+    margin: 0 5px;
 }
 .product-slider .product-card h3[b-mkldjm4yjh] {
     height: 45px;

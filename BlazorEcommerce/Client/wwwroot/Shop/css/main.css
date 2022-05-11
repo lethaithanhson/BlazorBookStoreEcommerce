@@ -20705,7 +20705,7 @@ input[type=number] {
 .btn-outlined--primary {
   background: transparent;
   border: 2px solid #62ab00 !important;
-  color: #62ab00;
+  color: #62ab00 !important;
 }
 .btn-outlined--primary:hover {
   background: #62ab00;

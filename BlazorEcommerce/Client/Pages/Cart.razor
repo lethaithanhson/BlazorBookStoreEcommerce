@@ -8,7 +8,7 @@
 @*@implements IDisposable*@
 @layout ShopLayout
 
-<Microsoft.AspNetCore.Components.Web.PageTitle>Shopping Cart</Microsoft.AspNetCore.Components.Web.PageTitle> 
+<Microsoft.AspNetCore.Components.Web.PageTitle>Shopping Cart</Microsoft.AspNetCore.Components.Web.PageTitle>
 
 <section class="breadcrumb-section">
     <h2 class="sr-only">Site Breadcrumb</h2>
@@ -99,66 +99,20 @@
                     <div class="cart-block-title">
                         <h2>YOU MAY BE INTERESTED IN…</h2>
                     </div>
-                    <div class="product-slider sb-slick-slider">
-                        @if (ProductService.Products == null || ProductService.Products.Count == 0)
-                        {
-                            <span>@ProductService.Message</span>
-                        }
-                        else
-                        {
-                            <BlazorSlickCarousel @ref="theCarousel" Configurations="configurations">
-                                <BlazorSlickCarouselContent>
-                                    @foreach (var product in ProductService.Products)
-                                    {
-                                        @if (product.Featured)
-                                        {
-                                            <div class="single-slide">
-                                                <div class="product-card">
-                                                    <div class="product-header">
-                                                        <a href="#" class="author">
-                                                            Lpple
-                                                        </a>
-                                                        <h3><a href="product/@product.Id">@product.Title</a></h3>
-                                                    </div>
-                                                    <div class="product-card--body">
-                                                        <div class="card-image">
-                                                            <img src="@product.ImageUrl" alt="">
-                                                            <div class="hover-contents">
-                                                                <a href="product/@product.Id" class="hover-image">
-                                                                    <img src="@product.ImageUrl" alt="">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="price-block">
-                                                            @if (product.Variants.Count == 0)
-                                                            {
-                                                                <span class="price">Empty</span>
-                                                            }
-                                                            else if (product.Variants.Count >= 1)
-                                                            {
-                                                                @if (product.Variants[0].OriginalPrice > product.Variants[0].Price)
-                                                                {
-                                                                    <span class="price">$ @product.Variants[0].Price</span>
-                                                                    <del class="price-old">$ @product.Variants[0].OriginalPrice</del>
-                                                                    <span class="price-discount">Sale</span>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <span class="price">$ @product.Variants[0].Price</span>
-                                                                }
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        }
-                                    }
-                                </BlazorSlickCarouselContent>
-                                <BlazorSlickCarouselLoading>
-                                    Loading...
-                                </BlazorSlickCarouselLoading>
-                            </BlazorSlickCarousel>
-                        }
+                    <div class="promo-wrapper promo-type-two rounded">
+                        <a href="#" class="promo-image promo-overlay bg-image"
+                           style="background-image: url('Shop/image/bg-images/promo-banner-small.jpg')">
+                        </a>
+                        <div class="promo-text">
+                            <div class="promo-text-inner">
+                                <span class="d-block price">$26.00</span>
+                                <h2>
+                                    Praise for <br>
+                                    The Night Child
+                                </h2>
+                                <a class="btn btn-outlined--primary">Buy Now</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Cart Summary -->
